@@ -216,53 +216,7 @@ try {
     <!-- OFC Summary Table & Chart -->
     <div class="row">
         <section class="col-lg-6">
-            <div class="card card-warning card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">💵 สรุปยอดเรียกเก็บกรมบัญชีกลาง (OFC eClaim) รายเดือน OP</h3>
-                </div>
-                <div class="card-body p-0">
-                    <table class="table table-striped table-valign-middle">
-                        <thead>
-                            <tr>
-                                <th>เดือน/ปี</th>
-                                <th class="numeric">ยอดเรียกเก็บ (Collected)</th>
-                                <th class="numeric">ยอดชดเชย (Compensated)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <!-- การแสดงผลข้อมูลจากฐานข้อมูล สรุปยอดเรียกเก็บกรมบัญชีกลาง (OFC eClaim) รายเดือน-->
-                            <?php 
-                                
-                                $grand_total_collect = 0;
-                                $grand_total_comp = 0;
-                                foreach ($yymm_array as $yymm) {
-                                    $y_short = substr($yymm, 0, 2);
-                                    $m_code = substr($yymm, 2, 2);
-                                    $display_name = $th_months[$m_code] . $y_short;
-
-                                    // ดึงข้อมูลจากฐานข้อมูล ถ้าไม่มีให้เป็น 0
-                                    $val_collect = $ofc_db_data[$yymm]['total_collect'] ?? 0;
-                                    $val_comp = $ofc_db_data[$yymm]['total_comp'] ?? 0;
-
-                                    $grand_total_collect += $val_collect;
-                                    $grand_total_comp += $val_comp;
-                                ?>
-                                    <tr>
-                                        <td><?php echo $display_name; ?></td>
-                                        <td class="numeric"><?php echo number_format($val_collect, 2); ?></td>
-                                        <td class="numeric"><?php echo number_format($val_comp, 2); ?></td>
-                                    </tr>
-                            <?php } ?>
-                            <tr class="total-row bg-light">
-                                <td><strong>รวม (ช่วง: ตุลาคม - กันยายน ปีงบ <?php echo $year_select; ?>)</strong></td>
-                                <td class="numeric text-bold text-primary"><?php echo number_format($grand_total_collect, 2); ?></td>
-                                <td class="numeric text-bold text-success"><?php echo number_format($grand_total_comp, 2); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
+            <div>
             <div class="row">
     <section class="col-lg-6">
         <div class="card card-primary card-outline">
@@ -331,13 +285,18 @@ try {
                         <?php 
                         $sum_ip_coll = 0; $sum_ip_comp = 0;
                         foreach ($yymm_array as $yymm) {
+                            // 1. ดึงค่าจาก Data Array
                             $val_coll = $ofc_db_data['IP'][$yymm]['total_collect'] ?? 0;
                             $val_comp = $ofc_db_data['IP'][$yymm]['total_comp'] ?? 0;
+                            // 2. สะสมยอดรวม    
                             $sum_ip_coll += $val_coll; $sum_ip_comp += $val_comp;
                             
-                            $m_code = substr($yymm, 2, 2);
+                            $y_code = substr($yymm, 0, 2); // ดึง 2 หลักแรก (เช่น 68)
+                            $m_code = substr($yymm, 2, 2); // ดึง 2 หลักหลัง (เช่น 10)
+                            // 4. สร้างชื่อเดือน/ปี สำหรับแสดงผล รวมชื่อเดือนกับปี เช่น "ตุลาคม" + "68"
+                            $display_name = $th_months[$m_code] . $y_code;
                             echo "<tr>
-                                    <td>{$th_months[$m_code]}</td>
+                                    <td>".$display_name."</td>
                                     <td class='text-right'>".number_format($val_coll, 2)."</td>
                                     <td class='text-right'>".number_format($val_comp, 2)."</td>
                                   </tr>";
