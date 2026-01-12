@@ -1,106 +1,6 @@
 <input type="hidden" name="page" value="overview">
 
-<?php
-
-#########################################################
-
-// เตรียมข้อมูล Array เดือน เพื่อลดการเขียนซ้ำซ้อน
-$months = [
-    '10' => 'ตุลาคม', '11' => 'พฤศจิกายน', '12' => 'ธันวาคม',
-    '01' => 'มกราคม', '02' => 'กุมภาพันธ์', '03' => 'มีนาคม',
-    '04' => 'เมษายน', '05' => 'พฤษภาคม', '06' => 'มิถุนายน',
-    '07' => 'กรกฎาคม', '08' => 'สิงหาคม', '09' => 'กันยายน'
-];
-
-// รายการปี (สามารถดึงจาก DB หรือคำนวณแบบ Dynamic ได้)
-$years = ['2569', '2568', '2567', '2566'];
-
-
-
-$th_months = ['10'=>'ตุลาคม','11'=>'พฤศจิกายน','12'=>'ธันวาคม','01'=>'มกราคม','02'=>'กุมภาพันธ์','03'=>'มีนาคม','04'=>'เมษายน','05'=>'พฤษภาคม','06'=>'มิถุนายน','07'=>'กรกฎาคม','08'=>'สิงหาคม','09'=>'กันยายน'];
-
-
-// รับค่าปี ถ้าไม่มีให้คำนวณปีงบประมาณปัจจุบัน
-$budget_year_now = (date('m') >= 10) ? date('Y') + 544 : date('Y') + 543;
-$year_select = $_GET['year'] ?? $budget_year_now;
-
-// รับค่าเดือน ถ้าไม่มี (หน้าแรก) ให้ใช้เดือนปัจจุบัน
-$current_month = date('m'); 
-$month_start = $_GET['month_start'] ?? '10'; // เริ่มต้นปีงบประมาณคือเดือนตุลาคม
-$month_end   = $_GET['month_end']   ?? $current_month; // สิ้นสุดปีงบประมาณคือกันยายน
-
-#######################################################
-// สร้าง Array ของช่วงเดือนในรูปแบบ YYMM ตามที่ผู้ใช้เลือก    
-// 1. รับค่าจาก Filter
-$year_select = $_GET['year'] ?? $budget_year_now;
-$month_start = $_GET['month_start'] ?? '10';
-$month_end   = $_GET['month_end']   ?? date('m');
-
-// 2. คำนวณปี ค.ศ. สองหลัก
-$current_year_short = substr($year_select, 2, 2); 
-$prev_year_short    = str_pad((int)$current_year_short - 1, 2, "0", STR_PAD_LEFT);
-
-// 3. สร้างลำดับเดือนตามปีงบประมาณ
-$months_order = ['10', '11', '12', '01', '02', '03', '04', '05', '06', '07', '08', '09'];
-
-// 4. ค้นหาตำแหน่ง Index ของเดือนที่เลือกเริ่มต้นและสิ้นสุด
-$start_idx = array_search($month_start, $months_order);
-$end_idx   = array_search($month_end, $months_order);
-
-// 5. กรณีผู้ใช้เลือกเดือนผิดลำดับ (เช่น เริ่ม ก.ย. จบ ต.ค.) ให้สลับค่าหรือจัดการตามเหมาะสม
-if ($start_idx > $end_idx) {
-    $temp = $start_idx;
-    $start_idx = $end_idx;
-    $end_idx = $temp;
-}
-
-// 6. สร้าง Array เฉพาะช่วงที่เลือก
-$yymm_array = [];
-for ($i = $start_idx; $i <= $end_idx; $i++) {
-    $m = $months_order[$i];
-    // ถ้าเป็นเดือน 10-12 ให้ใช้ปีงบประมาณก่อนหน้า (ปีเก่า)
-    $y = (in_array($m, ['10', '11', '12'])) ? $prev_year_short : $current_year_short;
-    $yymm_array[] = $y . $m;
-}
-
-// 7. รวมเป็นข้อความสำหรับแสดงผล
-$filter_display = implode(", ", $yymm_array);
-#######################################################
-
-try {
-    $conn = new PDO("mysql:host=192.168.2.21;dbname=RCMDB", "chang", "chang11143");
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $placeholders = implode(',', array_fill(0, count($yymm_array), '?'));
-    
-    // ปรับ SQL ให้ดึงทั้ง OP และ IP และ Group By Department ด้วย
-    $sql = "SELECT 
-                yymm, 
-                Department,
-                SUM(Collected) as total_collect, 
-                SUM(Compensated) as total_comp 
-            FROM repeclaim 
-            WHERE MainInscl = 'OFC'
-            AND Department IN ('OP', 'IP')
-            AND yymm IN ($placeholders)
-            GROUP BY yymm, Department";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->execute($yymm_array);
-    
-    // จัดโครงสร้าง Array ใหม่เป็น $ofc_db_data['OP']['6710']
-    $ofc_db_data = ['OP' => [], 'IP' => []];
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $dept = $row['Department'];
-        $ym = $row['yymm'];
-        $ofc_db_data[$dept][$ym] = $row;
-    }
-
-} catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}
-
-?>
+<?php include 'includes/config.php'; ?>
 
 
 <div class="container-fluid">
@@ -326,7 +226,7 @@ try {
                 <div class="card-body">
                     <div class="chart-box" style="height: 300px;">
                         
-                        <canvas id="ofcBarChart"></canvas>
+                        <canvas id="ofcBarChart" style="height:300px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -414,133 +314,28 @@ try {
     </div>
 </div>
 
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-<!-- เตรียมข้อมูลสำหรับ Chart.js -->
-
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const labels = <?php echo json_encode($js_labels); ?>;
+document.addEventListener('DOMContentLoaded', function () {
+    const labels = <?= json_encode($js_labels) ?>;
+    const ofcTotalCollect = <?= json_encode($js_ofc_total_collect) ?>;
+    const ofcTotalComp = <?= json_encode($js_ofc_total_comp) ?>;
 
-
-        // ข้อมูลที่ดึงจาก Database แปลงเป็น Array สำหรับ Chart.js
-        const ofcCollectedData = <?php 
-            $arr_collect = [];
-            foreach($yymm_array as $yymm) { $arr_collect[] = $db_data[$yymm]['sum_collected'] ?? 0; }
-            echo json_encode($arr_collect); 
-        ?>;
-
-        const ofcCompensatedData = <?php 
-            $arr_comp = [];
-            foreach($yymm_array as $yymm) { $arr_comp[] = $db_data[$yymm]['sum_compensated'] ?? 0; }
-            echo json_encode($arr_comp); 
-        ?>;
-
-        // ต่อจากนี้ใช้โค้ด Chart.js เดิมของคุณ...
-        const ofcBarCtx = document.getElementById('ofcBarChart').getContext('2d');
-        new Chart(ofcBarCtx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [
-                    { label: 'ยอดเรียกเก็บ', data: ofcCollectedData, backgroundColor: 'rgba(245, 83, 24, 0.8)' },
-                    { label: 'ยอดชดเชย', data: ofcCompensatedData, backgroundColor: 'rgba(120, 246, 246, 0.8)' }
-                ]
-            },
-            options: { /* options เดิม */ }
-        });
+    new Chart(document.getElementById('ofcBarChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                { label: 'ยอดเรียกเก็บรวม', data: ofcTotalCollect, backgroundColor: 'rgba(255, 159, 64, 0.8)' },
+                { label: 'ยอดชดเชยรวม', data: ofcTotalComp, backgroundColor: 'rgba(75, 192, 192, 0.8)' }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
     });
-</script>
-
-
-
-
-<!-- เตรียมข้อมูลสำหรับ Chart.js แบบ Dynamic จาก PHP  -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        // --- ส่วนที่แก้ไขให้เป็น Dynamic ---
-        const dynamicLabels = <?php 
-            $js_labels = [];
-            foreach ($yymm_array as $yymm) {
-                $m_code = substr($yymm, 2, 2);
-                $y_short = substr($yymm, 0, 2);
-                $js_labels[] = $th_months[$m_code] . $y_short;
-            }
-            echo json_encode($js_labels); 
-        ?>;
-
-        // Data from PHP
-        const labels = dynamicLabels;
-        const dataHerb = [3341.18,1427.42,2084.74,3845.7,7487.48,3313.02,4341.51,7499.5,18081.5,10533.69,10347.91,13155.11];
-        const dataFluoride = [400,0,300,0,0,900,0,0,0,900,0,300.01];
-        const dataIron = [0,0,160,0,1280,8720,0,0,0,0,0,0];
-        const dataContraceptive = [1260,600,1080,460,840,960,420,1080,840,600,900.01,320.01];
-        const dataColorectal = [2100,470,0,2100,1680,0,440,0,350,0,490,210];
-        const dataWalkin = [70,70,0,210,0,0,560,0,350,70,490,70];
-        const dataTotal = <?php echo json_encode(array_fill(0, count($yymm_array), 0)); ?>;
-        for (let i = 0; i < labels.length; i++) {
-            dataTotal[i] = dataHerb[i] + dataFluoride[i] + dataIron[i] + dataContraceptive[i] + dataColorectal[i] + dataWalkin[i];
-        }
-
-        // OFC Data
-        const ofcMonthsLabels = dynamicLabels;
-        const ofcCollectedData = [11697,10957,8118.5,6735,10964,8990,14217,11538,8542,8605,15365,92544];
-        const ofcCompensatedData = [11697,10017,8060,6735,8137,8910,11117,10793,8392,8605,16331.47,104277.55];
-
-        // Line Chart - Monthly Compensation
-        const monthlyCompensatedCtx = document.getElementById('monthlyCompensatedLineChart').getContext('2d');
-        new Chart(monthlyCompensatedCtx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [
-                    { label: 'รวมทุกกองทุน (ยอดรวม)', data: dataTotal, borderColor: 'rgba(54, 162, 235, 1)', backgroundColor: 'rgba(54, 162, 235, 0.1)', borderWidth: 3, tension: 0.3, fill: true, pointRadius: 5 },
-                    { label: 'ชดเชยสมุนไพร', data: dataHerb, borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-                    { label: 'ฟลูออไรด์ฯ', data: dataFluoride, borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-                    { label: 'ยาเสริมธาติเหล็กฯ', data: dataIron, borderColor: 'rgba(255, 159, 64, 1)', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-                    { label: 'ยาคุมกำเนิด', data: dataContraceptive, borderColor: 'rgba(153, 102, 255, 1)', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-                    { label: 'คัดกรองมะเร็งฯ', data: dataColorectal, borderColor: 'rgba(255, 206, 86, 1)', borderWidth: 2, tension: 0.3, pointRadius: 3 },
-                    { label: 'Walkinต่างจังหวัด', data: dataWalkin, borderColor: 'rgba(100, 100, 100, 1)', borderWidth: 2, tension: 0.3, pointRadius: 3 }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true, ticks: { callback: v => v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') } }
-                },
-                plugins: {
-                    tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(ctx.parsed.y)}` } }
-                },
-                animation: { duration: 1500 }
-            }
-        });
-
-        // Bar Chart - OFC Comparison
-        const ofcBarCtx = document.getElementById('ofcBarChart').getContext('2d');
-        new Chart(ofcBarCtx, {
-            type: 'bar',
-            data: {
-                labels: ofcMonthsLabels,
-                datasets: [
-                    { label: 'ยอดเรียกเก็บ', data: ofcCollectedData, backgroundColor: 'rgba(255, 159, 64, 0.8)', borderColor: 'rgba(255, 159, 64, 1)', borderWidth: 1 },
-                    { label: 'ยอดชดเชย', data: ofcCompensatedData, backgroundColor: 'rgba(75, 192, 192, 0.8)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 1 }
-                ]
-            },
-            options: {
-                responsive: true, maintainAspectRatio: false,
-                scales: {
-                    x: { autoSkip: false },
-                    y: { beginAtZero: true, ticks: { callback: v => v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') } }
-                },
-                plugins: {
-                    tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(ctx.parsed.y)}` } }
-                },
-                animation: { duration: 1000 }
-            }
-        });
-    });
+});
 </script>
 
 <?php include 'includes/footer.php'; ?>
