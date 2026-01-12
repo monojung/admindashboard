@@ -51,8 +51,6 @@ for ($i = $start_idx; $i <= $end_idx; $i++) {
 $filter_display = implode(", ", $yymm_array);
 #######################################################
 
-?>
-<?php
 try {
     $conn = new PDO("mysql:host=192.168.2.21;dbname=RCMDB", "chang", "chang11143");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -85,6 +83,7 @@ try {
 } catch(PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
+
 ?>
 
 
