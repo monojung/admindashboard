@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data: {
             labels: labels,
             datasets: [
-                { label: 'ยอดเรียกเก็บรวม', data: ofcTotalCollect, backgroundColor: 'rgba(255, 159, 64, 0.8)' },
+                { label: 'ยอดเรียกเก็บรวม', data: ofcTotalCollect, backgroundColor: 'rgba(255, 81, 0, 0.8)' },
                 { label: 'ยอดชดเชยรวม', data: ofcTotalComp, backgroundColor: 'rgba(75, 192, 192, 0.8)' }
             ]
         },
