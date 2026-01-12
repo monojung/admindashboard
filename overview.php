@@ -4,6 +4,18 @@
 
 #########################################################
 
+// เตรียมข้อมูล Array เดือน เพื่อลดการเขียนซ้ำซ้อน
+$months = [
+    '10' => 'ตุลาคม', '11' => 'พฤศจิกายน', '12' => 'ธันวาคม',
+    '01' => 'มกราคม', '02' => 'กุมภาพันธ์', '03' => 'มีนาคม',
+    '04' => 'เมษายน', '05' => 'พฤษภาคม', '06' => 'มิถุนายน',
+    '07' => 'กรกฎาคม', '08' => 'สิงหาคม', '09' => 'กันยายน'
+];
+
+// รายการปี (สามารถดึงจาก DB หรือคำนวณแบบ Dynamic ได้)
+$years = ['2569', '2568', '2567', '2566'];
+
+
 // รับค่าปี ถ้าไม่มีให้คำนวณปีงบประมาณปัจจุบัน
 $budget_year_now = (date('m') >= 10) ? date('Y') + 544 : date('Y') + 543;
 $year_select = $_GET['year'] ?? $budget_year_now;
@@ -91,59 +103,44 @@ try {
     <!-- Date Filter Form -->
     <div class="row">
         <div class="col-12">
-            <form method="GET" action="index.php" class="date-form card card-primary card-outline" style="margin-bottom: 20px;">
-                <div class="card-body d-flex align-items-center p-3">
-                    <p class="mb-0 text-bold text-lg mr-4">📅 เลือกช่วงเวลา:</p>
 
-                    <label for="year_select" class="mr-2 text-bold">ปีงบประมาณ:</label>
-                    <select id="year_select" name="year" class="form-control form-control-sm mr-4" style="width: 120px;" required>
-                        <option value="2569" <?php echo ($year_select == '2569') ? 'selected' : ''; ?>>2569</option>
-                        <option value="2568" <?php echo ($year_select == '2568') ? 'selected' : ''; ?>>2568</option>
-                        <option value="2567" <?php echo ($year_select == '2567') ? 'selected' : ''; ?>>2567</option>
-                        <option value="2566" <?php echo ($year_select == '2566') ? 'selected' : ''; ?>>2566</option>
-                    </select>
 
-                    <label for="month_start_select" class="mr-2 text-bold">เริ่มต้นเดือน:</label>
-                    <select id="month_start_select" name="month_start" class="form-control form-control-sm mr-2" style="width: 120px;" required>
-                        <option value="10" <?php echo ($month_start == '10') ? 'selected' : ''; ?>>ตุลาคม</option>
-                        <option value="11" <?php echo ($month_start == '11') ? 'selected' : ''; ?>>พฤศจิกายน</option>
-                        <option value="12" <?php echo ($month_start == '12') ? 'selected' : ''; ?>>ธันวาคม</option>
-                        <option value="01" <?php echo ($month_start == '01') ? 'selected' : ''; ?>>มกราคม</option>
-                        <option value="02" <?php echo ($month_start == '02') ? 'selected' : ''; ?>>กุมภาพันธ์</option>
-                        <option value="03" <?php echo ($month_start == '03') ? 'selected' : ''; ?>>มีนาคม</option>
-                        <option value="04" <?php echo ($month_start == '04') ? 'selected' : ''; ?>>เมษายน</option>
-                        <option value="05" <?php echo ($month_start == '05') ? 'selected' : ''; ?>>พฤษภาคม</option>
-                        <option value="06" <?php echo ($month_start == '06') ? 'selected' : ''; ?>>มิถุนายน</option>
-                        <option value="07" <?php echo ($month_start == '07') ? 'selected' : ''; ?>>กรกฎาคม</option>
-                        <option value="08" <?php echo ($month_start == '08') ? 'selected' : ''; ?>>สิงหาคม</option>
-                        <option value="09" <?php echo ($month_start == '09') ? 'selected' : ''; ?>>กันยายน</option>
-                    </select>
+<form method="GET" action="index.php" class="date-form card card-primary card-outline mb-4">
+    <div class="card-body d-flex align-items-center p-3">
+        <p class="mb-0 text-bold text-lg mr-4">📅 เลือกช่วงเวลา:</p>
 
-                    <label for="month_end_select" class="mr-2 text-bold">ถึงเดือน:</label>
-                    <select id="month_end_select" name="month_end" class="form-control form-control-sm mr-4" style="width: 120px;" required>
-                        <option value="10" <?php echo ($month_end == '10') ? 'selected' : ''; ?>>ตุลาคม</option>
-                        <option value="11" <?php echo ($month_end == '11') ? 'selected' : ''; ?>>พฤศจิกายน</option>
-                        <option value="12" <?php echo ($month_end == '12') ? 'selected' : ''; ?>>ธันวาคม</option>
-                        <option value="01" <?php echo ($month_end == '01') ? 'selected' : ''; ?>>มกราคม</option>
-                        <option value="02" <?php echo ($month_end == '02') ? 'selected' : ''; ?>>กุมภาพันธ์</option>
-                        <option value="03" <?php echo ($month_end == '03') ? 'selected' : ''; ?>>มีนาคม</option>
-                        <option value="04" <?php echo ($month_end == '04') ? 'selected' : ''; ?>>เมษายน</option>
-                        <option value="05" <?php echo ($month_end == '05') ? 'selected' : ''; ?>>พฤษภาคม</option>
-                        <option value="06" <?php echo ($month_end == '06') ? 'selected' : ''; ?>>มิถุนายน</option>
-                        <option value="07" <?php echo ($month_end == '07') ? 'selected' : ''; ?>>กรกฎาคม</option>
-                        <option value="08" <?php echo ($month_end == '08') ? 'selected' : ''; ?>>สิงหาคม</option>
-                        <option value="09" <?php echo ($month_end == '09') ? 'selected' : ''; ?>>กันยายน</option>
-                    </select>
+        <label for="year_select" class="mr-2 mb-0 text-bold">ปีงบประมาณ:</label>
+        <select id="year_select" name="year" class="form-control form-control-sm mr-4" style="width: 100px;" required>
+            <?php foreach ($years as $y): ?>
+                <option value="<?= $y ?>" <?= ($year_select == $y) ? 'selected' : '' ?>><?= $y ?></option>
+            <?php endforeach; ?>
+        </select>
 
-                    <button type="submit" class="btn btn-sm btn-primary">
-                        <i class="fas fa-search mr-1"></i>
-                    </button>
+        <label for="month_start_select" class="mr-2 mb-0 text-bold">เริ่มต้นเดือน:</label>
+        <select id="month_start_select" name="month_start" class="form-control form-control-sm mr-2" style="width: 120px;" required>
+            <?php foreach ($months as $val => $name): ?>
+                <option value="<?= $val ?>" <?= ($month_start == $val) ? 'selected' : '' ?>><?= $name ?></option>
+            <?php endforeach; ?>
+        </select>
 
-                    <small class="text-muted ml-auto text-right">
-                        ช่วงเวลาที่ถูกกรอง: **YYMM IN (<?php echo $filter_display; ?>)**
-                    </small>
-                </div>
-            </form>
+        <label for="month_end_select" class="mr-2 mb-0 text-bold">ถึงเดือน:</label>
+        <select id="month_end_select" name="month_end" class="form-control form-control-sm mr-4" style="width: 120px;" required>
+            <?php foreach ($months as $val => $name): ?>
+                <option value="<?= $val ?>" <?= ($month_end == $val) ? 'selected' : '' ?>><?= $name ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <button type="submit" class="btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-search mr-1"></i> ค้นหา
+        </button>
+
+        <div class="ml-auto text-right">
+            <small class="text-muted ml-auto text-right">
+                ช่วงเวลาที่ถูกกรอง YYMM IN : <code class="text-primary"><?= htmlspecialchars($filter_display) ?></code>
+            </small>
+        </div>
+    </div>
+</form>
         </div>
     </div>
 
@@ -174,7 +171,15 @@ try {
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3><?php
+                        // คำนวณยอดเรียกเก็บรวมจากฐานข้อมูล
+                        $total_collected = 0;
+                        foreach ($yymm_array as $yymm) {
+                            $total_collected += ($ofc_db_data['OP'][$yymm]['total_collect'] ?? 0);
+                            $total_collected += ($ofc_db_data['IP'][$yymm]['total_collect'] ?? 0);
+                        }
+                        echo number_format($total_collected, 2);
+                    ?></h3>
                     <p>ยอดเรียกเก็บ OFC รวม</p>
                 </div>
                 <div class="icon"><i class="ion ion ion-cash"></i></div>
@@ -185,7 +190,17 @@ try {
         <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3><?php
+                        // คำนวณยอดชดเชยรวมจากฐานข้อมูล
+                        $total_compensated = 0;
+                        foreach ($yymm_array as $yymm) {
+                            $total_compensated += ($ofc_db_data['OP'][$yymm]['total_comp'] ?? 0);
+                            $total_compensated += ($ofc_db_data['IP'][$yymm]['total_comp'] ?? 0);
+                        }
+                        echo number_format($total_compensated, 2);
+
+                    ?>
+                    </h3>
                     <p>ยอดชดเชย OFC รวม</p>
                 </div>
                 <div class="icon"><i class="ion ion ion-cash"></i></div>
@@ -255,7 +270,7 @@ try {
                     <thead>
                         <tr>
                             <th>เดือน/ปี</th>
-                            <th class="text-right">เรียกเก็บ</th>
+                            <th class="text-right">เรียกเก็บ </th>
                             <th class="text-right">ชดเชย</th>
                         </tr>
                     </thead>
