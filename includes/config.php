@@ -1,5 +1,5 @@
 <?php
-
+include_once 'api/db.php';
 #########################################################
 
 // เตรียมข้อมูล Array เดือน เพื่อลดการเขียนซ้ำซ้อน
@@ -66,9 +66,7 @@ $filter_display = implode(", ", $yymm_array);
 #######################################################
 
 try {
-    $conn = new PDO("mysql:host=192.168.2.21;dbname=RCMDB", "chang", "chang11143");
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    
     $placeholders = implode(',', array_fill(0, count($yymm_array), '?'));
     
     // ปรับ SQL ให้ดึงทั้ง OP และ IP และ Group By Department ด้วย
