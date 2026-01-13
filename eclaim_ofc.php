@@ -205,11 +205,7 @@ new Chart(ctx, {
         </section>
     </div>
 
-    <footer class="main-footer text-sm">
-        <div class="float-right d-none d-sm-block"><b>Version</b> 1.1.0</div>
-        <strong>© 2024-2026 รพ.สต.บ้านหายโศก</strong>
-    </footer>
-</div>
+<?php include 'includes/footer.php'; ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>

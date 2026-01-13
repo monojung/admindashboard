@@ -1,134 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Haisok Report | รายงานลูกหนี้ OPD</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <style>
-        body { font-family: 'Sarabun', sans-serif; }
-        .nav-sidebar .nav-link.active { background-color: #28a745 !important; }
-        .nav-treeview > .nav-item > .nav-link.active { background-color: rgba(255,255,255,0.1) !important; color: #fff !important; }
-    </style>
-</head>
-<body class="sidebar-mini layout-fixed">
-<div class="wrapper">
-
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a></li>
-            <li class="nav-item d-none d-sm-inline-block"><span class="nav-link text-dark font-weight-bold">รายงานลูกหนี้ OPD</span></li>
-        </ul>
-        
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="fas fa-user-circle mr-1 text-primary"></i>
-                    <span class="font-weight-bold">นายฤทธิภูมิ อริยะจ้อน</span>
-                    <i class="fas fa-caret-down ml-1"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right shadow border-0">
-                    <div class="dropdown-header text-center">
-                        <strong>สิทธิ์: USER</strong>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <a href="logout.php" class="dropdown-item text-danger text-center" onclick="return confirm('ยืนยันการออกจากระบบ?')">
-                        <i class="fas fa-sign-out-alt mr-2"></i> <strong>ออกจากระบบ</strong>
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="index.php" class="brand-link text-center">
-            <span class="brand-text font-weight-bold">Haisok Report</span>
-        </a>
-        <div class="sidebar">
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-                    <li class="nav-item">
-                        <a href="index.php?page=overview" class="nav-link ">
-                            <i class="nav-icon fas fa-tachometer-alt"></i><p>หน้าหลัก Dashboard</p>
-                        </a>
-                    </li>
-                    
-                    <li class="nav-item ">
-                        <a href="#" class="nav-link ">
-                            <i class="nav-icon fas fa-chart-line"></i>
-                            <p>HosxpXE_pcu_Report<i class="right fas fa-angle-left"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="index.php?page=population_age" class="nav-link "><i class="fas fa-users nav-icon ml-2 text-info"></i><p>ประชากรแยกตามอายุ</p></a></li>
-                            <li class="nav-item"><a href="index.php?page=service_dashboard" class="nav-link "><i class="far fa-file-alt nav-icon ml-2"></i><p>10 อันดับโรค</p></a></li>
-                            
-                            <li class="nav-item">
-                                <a href="index.php?page=dental_income" class="nav-link ">
-                                    <i class="fas fa-wallet nav-icon ml-2 text-warning"></i><p>สรุปรายได้ทันตกรรม</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="index.php?page=dental" class="nav-link ">
-                                    <i class="fas fa-tooth nav-icon ml-2 text-white"></i><p>รายละเอียดทันตกรรม</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item menu-open">
-                        <a href="#" class="nav-link active">
-                            <i class="nav-icon fas fa-wallet"></i>
-                            <p>จัดเก็บรายได้ รพ.สต.<i class="right fas fa-angle-left"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="?page=income" class="nav-link "><i class="fas fa-chart-pie nav-icon text-info"></i><p>ประมาณการรายได้</p></a></li>
-                            <li class="nav-item"><a href="?page=ar" class="nav-link active"><i class="fas fa-file-invoice-dollar nav-icon text-warning"></i><p>รายงานลูกหนี้</p></a></li>
-                            <li class="nav-item"><a href="?page=eclaim_ofc" class="nav-link "><i class="fas fa-file-export nav-icon text-primary"></i><p>เคลมสิทธิกรมบัญชีกลาง</p></a></li>
-                            <li class="nav-item"><a href="?page=eclaim_lgo" class="nav-link "><i class="fas fa-file-export nav-icon text-info"></i><p>เคลมสิทธิ LGO</p></a></li>
-                            <li class="nav-item"><a href="?page=eclaim_bkk" class="nav-link "><i class="fas fa-file-export nav-icon text-info"></i><p>เคลมสิทธิ กทม. (BKK)</p></a></li>
-                            <li class="nav-item"><a href="?page=fsfund" class="nav-link "><i class="fas fa-coins nav-icon text-warning"></i><p>ชดเชย FS</p></a></li>
-                            <li class="nav-item"><a href="?page=moph_claim_report" class="nav-link "><i class="fas fa-hospital-user nav-icon text-primary"></i><p>ชดเชย MOPH Claim</p></a></li>
-                            <li class="nav-item ">
-                                <a href="#" class="nav-link ">
-                                    <i class="fas fa-leaf nav-icon text-success"></i>
-                                    <p>ชดเชยแพทย์แผนไทย <i class="right fas fa-angle-left"></i></p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item"><a href="?page=thai_fm_annual" class="nav-link "><i class="far fa-circle nav-icon ml-3 text-success"></i><p>ชดเชยรายปี ภาพCUP</p></a></li>
-                                    <li class="nav-item"><a href="?page=thai_med_ofc" class="nav-link "><i class="far fa-circle nav-icon ml-3 text-success"></i><p>สรุปผลงานแยกสิทธิ</p></a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item"><a href="?page=sss_report_02991" class="nav-link "><i class="fas fa-user-shield nav-icon text-indigo"></i><p>ชดเชย ปกส.ในจังหวัด</p></a></li>
-                            <li class="nav-item"><a href="?page=car_act_report" class="nav-link "><i class="fas fa-car-crash nav-icon text-danger"></i><p>ชดเชย พรบ.รถ</p></a></li>
-							<li class="nav-item">
-                            <a href="?page=rcpt_debt_report" class="nav-link "><i class="fas fa-balance-scale nav-icon text-warning"></i><p>กระทบยอดลูกหนี้รายสิทธิ</p></a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item ">
-                        <a href="#" class="nav-link ">
-                            <i class="nav-icon fas fa-hospital"></i>
-                            <p>จัดเก็บรายได้ รพ.แม่ข่าย<i class="right fas fa-angle-left"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item"><a href="index.php?page=main_hospital_income" class="nav-link "><i class="far fa-circle nav-icon text-success"></i><p>จัดการรายได้แม่ข่าย</p></a></li>
-                            <li class="nav-item"><a href="index.php?page=eclaim_ofc_hosp" class="nav-link "><i class="far fa-circle nav-icon text-info"></i><p>สิทธิเบิกตรงแม่ข่าย</p></a></li>
-                        </ul>
-                    </li>
-                    
-                                    </ul>
-            </nav>
-        </div>
-    </aside>
-
-    <div class="content-wrapper">
-        <section class="content" style="padding-top: 20px;">
-            <div class="container-fluid">
-                
 <style>
     /* สไตล์สำหรับลิงก์คลิกเลียนแบบหน้า OFC */
     .rep-link { cursor: pointer; color: #4e73df; font-weight: bold; border-bottom: 1px dashed #4e73df; }
@@ -438,10 +308,7 @@ function showPatientList(arCode, groupName) {
         </section>
     </div>
 
-    <footer class="main-footer text-sm">
-        <div class="float-right d-none d-sm-block"><b>Version</b> 1.1.0</div>
-        <strong>© 2024-2026 รพ.สต.บ้านหายโศก</strong>
-    </footer>
+    <?php include 'includes/footer.php'; ?>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -465,5 +332,3 @@ function showPatientList(arCode, groupName) {
     window.onkeypress = resetTimer;
 </script>
 
-</body>
-</html>

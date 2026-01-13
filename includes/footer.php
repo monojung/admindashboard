@@ -19,7 +19,8 @@ $current_version = getVersion(__FILE__);
     <strong>Copyright &copy; 2026 THC Dashboard.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Powered By.Fz Version</b> <?php echo $current_version; ?>
+      <b>Powered <a href="https://www.facebook.com/fenziikung" target="_blank">By.Fz </a> Version</b>  <?php echo $current_version; ?> 
+   
     </div>
 
     <!-- Control Sidebar -->
