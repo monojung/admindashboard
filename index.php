@@ -14,7 +14,7 @@
           'file' => 'ar.php'
       ],
       'eclaim_ofc' => [
-          'title' => 'รายงานส่งเคลม สปสช. (สำนักงาน)',
+          'title' => 'รายงานส่งเคลม สปสช. (กรมบัญชีกลาง)',
           'file' => 'eclaim_ofc.php'
       ],
       'eclaim_lgo' => [

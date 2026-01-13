@@ -1,4 +1,6 @@
 <input type="hidden" name="page" value="income">
+<?php include 'includes/config.php'; ?>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">

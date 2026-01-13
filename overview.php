@@ -55,7 +55,7 @@
                     <p>ยอดรวมทุกกองทุน (ชดเชยตามช่วงเดือนที่เลือก)</p>
                 </div>
                 <div class="icon"><i class="ion ion-cash"></i></div>
-                <a href="#" class="small-box-footer">ช่วง: ตุลาคม - กันยายน ปีงบ <?php echo $year_select; ?> <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">ช่วง: <?= $months[$month_start] ?> - <?= $months[$month_end] ?> ปีงบ <?php echo $year_select; ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
@@ -66,7 +66,7 @@
                     <p>ยอดสูงสุดต่อเดือน (ชดเชยตามช่วงเดือนที่เลือก)</p>
                 </div>
                 <div class="icon"><i class="ion ion ion-cash"></i></div>
-                <a href="#" class="small-box-footer">ช่วง: ตุลาคม - กันยายน ปีงบ <?php echo $year_select; ?> <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">ช่วง: <?= $months[$month_start] ?> - <?= $months[$month_end] ?> ปีงบ <?php echo $year_select; ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
@@ -85,7 +85,7 @@
                     <p>ยอดเรียกเก็บ OFC รวม</p>
                 </div>
                 <div class="icon"><i class="ion ion ion-cash"></i></div>
-                <a href="#" class="small-box-footer">ช่วง: ตุลาคม - กันยายน ปีงบ <?php echo $year_select; ?> <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">ช่วง: <?= $months[$month_start] ?> - <?= $months[$month_end] ?> ปีงบ <?php echo $year_select; ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
 
@@ -106,7 +106,7 @@
                     <p>ยอดชดเชย OFC รวม</p>
                 </div>
                 <div class="icon"><i class="ion ion ion-cash"></i></div>
-                <a href="#" class="small-box-footer">ช่วง: ตุลาคม - กันยายน ปีงบ <?php echo $year_select; ?> <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer">ช่วง: <?= $months[$month_start] ?> - <?= $months[$month_end] ?> ปีงบ <?php echo $year_select; ?> <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
     </div>
@@ -219,12 +219,23 @@
         <section class="col-lg-6">
             <div class="card card-secondary card-outline">
                 <div class="card-header">
-                    <h3 class="card-title">📊 แนวโน้มยอด OFC รายเดือน (ช่วง: ตุลาคม - กันยายน ปีงบ <?php echo $year_select; ?>)</h3>
+                   <h3 class="card-title">        📊 แนวโน้มยอด OFC OP (ช่วง: <?= $months[$month_start] ?> - <?= $months[$month_end] ?> ปีงบ <?= $year_select ?>)    </h3>
                 </div>
                 <div class="card-body">
                     <div class="chart-box" style="height: 300px;">
                         
-                        <canvas id="ofcBarChart" style="height:300px;"></canvas>
+                        <canvas id="ofcOpBarChart" style="height:300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-secondary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">📊 แนวโน้มยอด OFC IP (ช่วง: <?= $months[$month_start] ?> - <?= $months[$month_end] ?> ปีงบ <?= $year_select ?>)</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-box" style="height: 300px;">
+                        
+                        <canvas id="ofcIpBarChart" style="height:300px;"></canvas>
                     </div>
                 </div>
             </div>
@@ -314,14 +325,33 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const labels = <?= json_encode($js_labels) ?>;
-    const ofcTotalCollect = <?= json_encode($js_ofc_total_collect) ?>;
-    const ofcTotalComp = <?= json_encode($js_ofc_total_comp) ?>;
+    const ofcTotalCollect = <?= json_encode($js_op_collect) ?>;
+    const ofcTotalComp = <?= json_encode($js_op_comp) ?>;
 
-    new Chart(document.getElementById('ofcBarChart').getContext('2d'), {
+    new Chart(document.getElementById('ofcOpBarChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                { label: 'ยอดเรียกเก็บรวม', data: ofcTotalCollect, backgroundColor: 'rgba(255, 81, 0, 0.8)' },
+                { label: 'ยอดชดเชยรวม', data: ofcTotalComp, backgroundColor: 'rgba(75, 192, 192, 0.8)' }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const labels = <?= json_encode($js_labels) ?>;
+    const ofcTotalCollect = <?= json_encode($js_ip_collect) ?>;
+    const ofcTotalComp = <?= json_encode($js_ip_comp) ?>;
+
+    new Chart(document.getElementById('ofcIpBarChart').getContext('2d'), {
         type: 'bar',
         data: {
             labels: labels,

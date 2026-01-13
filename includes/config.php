@@ -119,4 +119,14 @@ foreach ($yymm_array as $yymm) {
     $js_ofc_total_collect[] = $op_coll + $ip_coll;
     $js_ofc_total_comp[] = $op_comp + $ip_comp;
 }
+
+$month_names = [
+    "1" => "มกราคม", "2" => "กุมภาพันธ์", "3" => "มีนาคม", "4" => "เมษายน",
+    "5" => "พฤษภาคม", "6" => "มิถุนายน", "7" => "กรกฎาคม", "8" => "สิงหาคม",
+    "9" => "กันยายน", "10" => "ตุลาคม", "11" => "พฤศจิกายน", "12" => "ธันวาคม"
+];
+
+// แปลงค่าให้เป็น String (ถ้า $month_start เป็น array ให้หยิบ [0] มาก่อน)
+$current_month_val = is_array($month_start) ? $month_start[0] : $month_start;
+$month_string = $month_names[$current_month_val] ?? "ไม่ระบุเดือน";
 ?>
