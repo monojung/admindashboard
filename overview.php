@@ -1,6 +1,9 @@
 <input type="hidden" name="page" value="overview">
 
-<?php include 'includes/config.php'; ?>
+<?php 
+include 'includes/config.php'; 
+include 'includes/scripts.php';
+?>
 
 
 <div class="container-fluid">
@@ -274,12 +277,15 @@
                         <thead>
                             <tr>
                                 <th>เดือน</th>
-                                <th class="numeric">ชดเชยสมุนไพร</th>
-                                <th class="numeric">ฟลูออไรด์ฯ</th>
-                                <th class="numeric">ยาเสริมธาติเหล็กฯ</th>
+                                <th class="numeric">ชดเชยสมุนไพร HC22</th>                                
+                                <th class="numeric">instument</th>
+                                <th class="numeric">healthrider</th>
+                                <th class="numeric">telemedicine</th>
+                                <th class="numeric">ฝากครรภ์</th>
                                 <th class="numeric">ยาคุมกำเนิด</th>
-                                <th class="numeric">คัดกรองมะเร็งฯ</th>
-                                <th class="numeric">Walkin ต่างจังหวัด</th>
+                                <th class="numeric">ทดสอบการตั้งครรภ์</th>
+                                <th class="numeric">ตรวจหลังคลอด</th>
+                                <th class="numeric">คัดกรองมะเร็งลำไส้</th>
                                 <th class="numeric">รวมทุกกองทุน</th>
                             </tr>
                         </thead>
@@ -321,48 +327,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const labels = <?= json_encode($js_labels) ?>;
-    const ofcTotalCollect = <?= json_encode($js_op_collect) ?>;
-    const ofcTotalComp = <?= json_encode($js_op_comp) ?>;
-
-    new Chart(document.getElementById('ofcOpBarChart').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                { label: 'ยอดเรียกเก็บรวม', data: ofcTotalCollect, backgroundColor: 'rgba(255, 81, 0, 0.8)' },
-                { label: 'ยอดชดเชยรวม', data: ofcTotalComp, backgroundColor: 'rgba(75, 192, 192, 0.8)' }
-            ]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-    });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const labels = <?= json_encode($js_labels) ?>;
-    const ofcTotalCollect = <?= json_encode($js_ip_collect) ?>;
-    const ofcTotalComp = <?= json_encode($js_ip_comp) ?>;
-
-    new Chart(document.getElementById('ofcIpBarChart').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                { label: 'ยอดเรียกเก็บรวม', data: ofcTotalCollect, backgroundColor: 'rgba(255, 81, 0, 0.8)' },
-                { label: 'ยอดชดเชยรวม', data: ofcTotalComp, backgroundColor: 'rgba(75, 192, 192, 0.8)' }
-            ]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-    });
-});
-</script>
-
 <?php include 'includes/footer.php'; ?>

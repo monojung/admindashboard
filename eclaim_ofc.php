@@ -1,30 +1,9 @@
-
-<input type="hidden" name="page" value="eclaim_ofc">
 <?php include 'includes/config.php'; ?>
+<input type="hidden" name="page" value="eclaim_ofc">
+           
 
-                
-<style>
-    /* ส่วนจัดการ Logo และ Header */
-    .header-container { display: flex; align-items: center; margin-bottom: 20px; }
-    .header-logo { height: 60px; width: auto; transition: transform 0.3s; }
-    .header-logo:hover { transform: scale(1.05); }
+<div class="container-fluid">
     
-    /* สไตล์ Small Box */
-    .small-box { border-radius: 15px; position: relative; display: block; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); color: #fff; overflow: hidden; padding: 25px; transition: transform 0.3s; }
-    .small-box:hover { transform: translateY(-5px); }
-    .small-box .inner h3 { font-size: 2rem; font-weight: 700; margin: 0 0 5px 0; white-space: nowrap; padding: 0; }
-    .small-box .inner p { font-size: 0.95rem; opacity: 0.9; margin: 0; }
-    .small-box .icon { position: absolute; top: 15px; right: 20px; z-index: 0; font-size: 4rem; color: rgba(0,0,0,0.15); transition: transform 0.3s; }
-    
-    .bg-gradient-primary { background: linear-gradient(45deg, #4e73df 10%, #224abe 100%); }
-    .bg-gradient-success { background: linear-gradient(45deg, #1cc88a 10%, #13855c 100%); }
-    .bg-gradient-info { background: linear-gradient(45deg, #36b9cc 10%, #258391 100%); }
-    .bg-gradient-danger { background: linear-gradient(45deg, #e74a3b 10%, #be2617 100%); }
-    
-    .rep-link { cursor: pointer; color: #4e73df; font-weight: bold; border-bottom: 1px dashed #4e73df; }
-    .rep-link:hover { background-color: #f8f9fa; text-decoration: none; }
-</style>
-
 <div class="row mb-3 mt-3">
     <div class="col-sm-12">
         <div class="header-container">
@@ -227,6 +206,3 @@ new Chart(ctx, {
     window.onclick = resetTimer;      
     window.onkeypress = resetTimer;
 </script>
-
-</body>
-</html>

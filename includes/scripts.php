@@ -35,3 +35,46 @@
 
 <!-- ChartJS ONLINE-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.min.js" integrity="sha512-n/G+dROKbKL3GVngGWmWfwK0yPctjZQM752diVYnXZtD/48agpUKLIn0xDQL9ydZ91x6BiOmTIFwWjjFi2kEFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+<!-- Custom Chart Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const labels = <?= json_encode($js_labels) ?>;
+    const ofcTotalCollect = <?= json_encode($js_op_collect) ?>;
+    const ofcTotalComp = <?= json_encode($js_op_comp) ?>;
+
+    new Chart(document.getElementById('ofcOpBarChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                { label: 'ยอดเรียกเก็บรวม', data: ofcTotalCollect, backgroundColor: 'rgba(255, 81, 0, 0.8)' },
+                { label: 'ยอดชดเชยรวม', data: ofcTotalComp, backgroundColor: 'rgba(75, 192, 192, 0.8)' }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const labels = <?= json_encode($js_labels) ?>;
+    const ofcTotalCollect = <?= json_encode($js_ip_collect) ?>;
+    const ofcTotalComp = <?= json_encode($js_ip_comp) ?>;
+
+    new Chart(document.getElementById('ofcIpBarChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                { label: 'ยอดเรียกเก็บรวม', data: ofcTotalCollect, backgroundColor: 'rgba(255, 81, 0, 0.8)' },
+                { label: 'ยอดชดเชยรวม', data: ofcTotalComp, backgroundColor: 'rgba(75, 192, 192, 0.8)' }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+});
+</script>
