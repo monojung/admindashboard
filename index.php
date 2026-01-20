@@ -2,6 +2,7 @@
   include 'includes/header.php';
   include 'includes/navbar.php';
   include 'includes/sidebar.php';
+  include 'includes/scripts.php';
 
   // Define page configuration
   $pages = [
@@ -58,7 +59,8 @@
   $content_file = $pages[$page]['file'];
 ?>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
+  
 <div class="wrapper">
   <div class="content-wrapper">
     <div class="content-header">
@@ -87,5 +89,4 @@
   <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
 
-<?php include 'includes/scripts.php'; ?>
 </body>

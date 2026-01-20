@@ -329,4 +329,3 @@ include 'includes/config.php';
         </div>
     </div>
 </div>
-<?php include 'includes/footer.php'; ?>

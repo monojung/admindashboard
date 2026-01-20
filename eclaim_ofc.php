@@ -158,9 +158,7 @@
         <div class="modal-body" id="modalContent"></div>
     </div></div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+ 
 <script>
 function viewRepDetail(repId) {
     $('#modalRepTitle').text(repId); $('#repModal').modal('show');
@@ -180,16 +178,12 @@ new Chart(ctx, {
     },
     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true, grace: '20%', ticks: { callback: (v) => v.toLocaleString() } } } }
 });
-</script>            </div>
+</script>            
+</div>
         </section>
     </div>
 
 <?php include 'includes/footer.php'; ?>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-
 <script>
     const idleTime = 20 * 60 * 1000; 
     let idleTimer;
