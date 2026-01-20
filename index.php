@@ -51,7 +51,6 @@
           'file' => 'overview.php'
       ]
   ];
-
   $page = isset($_GET['page']) ? $_GET['page'] : 'overview';
   $page = array_key_exists($page, $pages) ? $page : 'overview';
   
@@ -60,7 +59,6 @@
 ?>
 
 <body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
-  
 <div class="wrapper">
   <div class="content-wrapper">
     <div class="content-header">
@@ -78,14 +76,12 @@
         </div>
       </div>
     </div>
-
     <div class="content">
       <div class="container-fluid">
         <?php include $content_file; ?>
       </div>
     </div>
   </div>
-
   <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
 
