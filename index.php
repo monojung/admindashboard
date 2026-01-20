@@ -30,7 +30,7 @@
           'file' => 'moph_claim_report.php'
       ],
       'thai_fm_annual' => [
-          'title' => 'รายงานการเงินประจำปี สช.',
+          'title' => 'รายงานการเงินแพทย์แผนไทย.',
           'file' => 'thai_fm_annual.php'
       ],
       'sss_report_02991' => [
@@ -40,6 +40,10 @@
       'car_act_report' => [
           'title' => 'รายงานตาม พ.ร.บ. คุ้มครองผู้ประสบภัยจากรถ',
           'file' => 'car_act_report.php'
+      ],
+      'pt_report' => [
+          'title' => 'รายงานการเงินกายภาพบำบัด (PT Report)',
+          'file' => 'pt_report.php'
       ],
       'overview' => [
           'title' => 'Dashboard ภาพรวมรายได้',
