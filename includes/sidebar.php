@@ -34,7 +34,8 @@
                 <li class="nav-item"><a href="?page=eclaim_lgo" class="nav-link "><i class="fas fa-file-export nav-icon text-info"></i><p>เคลมสิทธิ LGO</p></a></li>
                 <li class="nav-item"><a href="?page=fsfund" class="nav-link "><i class="fas fa-coins nav-icon text-warning"></i><p>ชดเชย FS</p></a></li>
                 <li class="nav-item"><a href="?page=moph_claim_report" class="nav-link "><i class="fas fa-hospital-user nav-icon text-primary"></i><p>ชดเชย MOPH Claim</p></a></li>
-                <li class="nav-item"><a href="?page=thai_fm_annual" class="nav-link "><i class="fas fa-leaf nav-icon text-success"></i><p>ชดเชยแพทย์แผนไทย</p></a></li>
+                <li class="nav-item"><a href="?page=thai_fm_annual" class="nav-link "><i class="fas fa-leaf nav-icon text-success"></i><p>ชดเชยกายภาพบำบัด</p></a></li>
+                                <li class="nav-item"><a href="?page=thai_fm_annual" class="nav-link "><i class="fas fa-leaf nav-icon text-success"></i><p>ชดเชยแพทย์แผนไทย</p></a></li>
                 <li class="nav-item"><a href="?page=sss_report_02991" class="nav-link "><i class="fas fa-user-shield nav-icon text-indigo"></i><p>ชดเชย ปกส.ในจังหวัด</p></a></li>
                 <li class="nav-item"><a href="?page=car_act_report" class="nav-link "><i class="fas fa-car-crash nav-icon text-danger"></i><p>ชดเชย พรบ.รถ</p></a></li>
           <li class="nav-item ">

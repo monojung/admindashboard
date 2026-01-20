@@ -307,6 +307,9 @@ include 'includes/scripts.php';
                                         <td class="numeric"><?php /* ใส่ตัวแปรยอดชดเชยที่นี่ */ ?></td>
                                         <td class="numeric"><?php /* ใส่ตัวแปรยอดชดเชยที่นี่ */ ?></td>
                                         <td class="numeric"><?php /* ใส่ตัวแปรยอดชดเชยที่นี่ */ ?></td>
+                                        <td class="numeric"><?php /* ใส่ตัวแปรยอดชดเชยที่นี่ */ ?></td>
+                                        <td class="numeric"><?php /* ใส่ตัวแปรยอดชดเชยที่นี่ */ ?></td>
+                                        
 
                                     </tr>
                             <?php } ?>
