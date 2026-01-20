@@ -3,9 +3,8 @@
   <!-- Brand Logo -->
   <a href="#" class="brand-link">
     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">Admin Dashboard</span>
+    <span class="brand-text font-weight-light">THC Dashboard</span>
   </a>
-
   <!-- Sidebar -->
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
@@ -16,7 +15,7 @@
       <div class="info">
         <a href="#" class="d-block">โรงพยาบาลทุ่งหัวช้าง</a>
       </div>
-    </div>
+    </div> 
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">

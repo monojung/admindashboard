@@ -2,8 +2,6 @@
   include 'includes/header.php';
   include 'includes/navbar.php';
   include 'includes/sidebar.php';
-  include 'includes/scripts.php';
-
   // Define page configuration
   $pages = [
       'income' => [
@@ -51,14 +49,16 @@
           'file' => 'overview.php'
       ]
   ];
+
   $page = isset($_GET['page']) ? $_GET['page'] : 'overview';
   $page = array_key_exists($page, $pages) ? $page : 'overview';
   
   $page_title = $pages[$page]['title'];
   $content_file = $pages[$page]['file'];
 ?>
-
+<html>
 <body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
+  
 <div class="wrapper">
   <div class="content-wrapper">
     <div class="content-header">
@@ -76,13 +76,17 @@
         </div>
       </div>
     </div>
+
     <div class="content">
       <div class="container-fluid">
         <?php include $content_file; ?>
       </div>
     </div>
   </div>
+
   <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
 
 </body>
+</html>
+<?php include 'includes/scripts.php'; ?>  
