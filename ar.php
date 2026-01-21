@@ -1,5 +1,9 @@
 <div class="row">
     <div class="col-12">
+
+    <?php 
+include 'includes/config.php'; 
+?>
         <form method="GET" action="index.php" class="ar-filter-form card card-primary card-outline" style="margin-bottom: 20px;">
             <div class="card-body d-flex align-items-center p-3 flex-wrap">
                 <input type="hidden" name="page" value="ar"> 

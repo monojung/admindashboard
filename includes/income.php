@@ -2,25 +2,27 @@
     <!-- Date Filter Form -->
     <div class="row">
         <div class="col-12">
-            <form method="GET" action="index.php" class="date-form card card-primary card-outline" style="margin-bottom: 20px;">
-                <div class="card-body d-flex align-items-center p-3">
-                    <input type="hidden" name="page" value="income">
-                    
-                    <label for="start_date_input" class="mr-2">วันที่เริ่มต้น:</label>
-                    <input type="date" id="start_date_input" name="start_date" class="form-control form-control-sm mr-2" style="width: 150px;" value="2026-01-01" required>
-                    
-                    <label for="end_date_input" class="mr-2">ถึงวันที่:</label>
-                    <input type="date" id="end_date_input" name="end_date" class="form-control form-control-sm mr-2" style="width: 150px;" value="2026-01-06" required>
-                    
-                    <button type="submit" class="btn btn-sm btn-primary">
-                        <i class="fas fa-search mr-1"></i> แสดงรายงาน
-                    </button>
-                    
-                    <small class="text-muted ml-auto">
-                        ข้อมูลตั้งแต่วันที่ <strong>2026-01-01</strong> ถึง <strong>2026-01-06</strong>
-                    </small>
-                </div>
-            </form>
+            <form method="GET" action="index.php" id="searchForm" class="date-form card card-primary card-outline" style="margin-bottom: 20px;">
+    <div class="card-body d-flex align-items-center p-3">
+        <input type="hidden" name="page" value="income">
+        <input type="hidden" name="from_dropdown" id="from_dropdown" value="N">
+
+        <label class="mr-2">ปีงบประมาณ:</label>
+        <select name="budget_year" class="form-control form-control-sm mr-3" style="width: 120px;" 
+                onchange="document.getElementById('from_dropdown').value='Y'; this.form.submit();">
+            <option value='2570' >2570</option><option value='2569' selected>2569</option><option value='2568' >2568</option><option value='2567' >2567</option><option value='2566' >2566</option><option value='2565' >2565</option>        </select>
+
+        <label for="start_date_input" class="mr-2">วันที่เริ่มต้น:</label>
+        <input type="date" name="start_date" class="form-control form-control-sm mr-2" style="width: 150px;" value="2025-10-01">
+
+        <label for="end_date_input" class="mr-2">ถึงวันที่:</label>
+        <input type="date" name="end_date" class="form-control form-control-sm mr-2" style="width: 150px;" value="2026-09-30">
+
+        <button type="submit" onclick="document.getElementById('from_dropdown').value='N';" class="btn btn-sm btn-primary">
+            <i class="fas fa-search mr-1"></i> แสดงรายงาน
+        </button>
+    </div>
+</form>
         </div>
     </div>
 

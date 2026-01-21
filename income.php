@@ -1,27 +1,41 @@
 <input type="hidden" name="page" value="income">
 <?php include 'includes/config.php'; ?>
 
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <form method="GET" action="index.php" class="date-form card card-primary card-outline" style="margin-bottom: 20px;">
-                <div class="card-body d-flex align-items-center p-3">
-                    <input type="hidden" name="page" value="income"> 
-                    
-                    <label for="start_date_input" class="mr-2">วันที่เริ่มต้น:</label>
-                    <input type="date" id="start_date_input" name="start_date" class="form-control form-control-sm mr-2" style="width: 150px;" value="2026-01-01" required>
-                    
-                    <label for="end_date_input" class="mr-2">ถึงวันที่:</label>
-                    <input type="date" id="end_date_input" name="end_date" class="form-control form-control-sm mr-2" style="width: 150px;" value="2026-01-06" required>
-                    
-                    <button type="submit" class="btn btn-sm btn-primary">
-                        <i class="fas fa-search mr-1"></i> แสดงรายงาน
-                    </button>
-                    
-                </div>
-            </form>
+            <form method="GET" action="index.php" id="searchForm" class="date-form card card-primary card-outline" style="margin-bottom: 20px;">
+    <div class="card-body d-flex align-items-center p-3">
+        <input type="hidden" name="page" value="income">
+        <input type="hidden" name="from_dropdown" id="from_dropdown" value="N">
+
+        <label class="mr-2">ปีงบประมาณ:</label>
+        <select name="budget_year" class="form-control form-control-sm mr-3" style="width: 120px;" 
+                onchange="document.getElementById('from_dropdown').value='Y'; this.form.submit();">
+            <option value="2570">2570</option>
+            <option value="2569">2569</option>
+            <option value="2568">2568</option>
+            <option value="2567">2567</option>
+            <option value="2566">2566</option>
+            <option value="2565">2565</option>
+        </select>
+
+        <label for="start_date_input" class="mr-2">วันที่เริ่มต้น:</label>
+<input type="date" name="start_date" id="start_date" class="form-control form-control-sm mr-2" style="width: 150px;" value="2025-10-01">
+
+<label for="end_date_input" class="mr-2">ถึงวันที่:</label>
+<input type="date" name="end_date" id="end_date" class="form-control form-control-sm mr-2" style="width: 150px;" value="2026-09-30">
+
+        <button type="submit" onclick="document.getElementById('from_dropdown').value='N';" class="btn btn-sm btn-primary">
+            <i class="fas fa-search mr-1"></i> ค้นหา
+        </button>
+    </div>
+</form>
         </div>
     </div>
+
+
 
     <!-- Summary Cards -->
     <div class="row">
@@ -80,31 +94,6 @@
                 <a href="adp_services_report.php" class="small-box-footer">ดูรายละเอียด <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-    </div>
-
-    <!-- Charts Section -->
-    <div class="row">
-        <section class="col-lg-6">
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">สัดส่วนรายได้ตามสิทธิ (Pie Chart)</h3>
-                </div>
-                <div class="card-body">
-                    <canvas id="incomePieChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section class="col-lg-6">
-            <div class="card card-primary card-outline">
-                <div class="card-header">
-                    <h3 class="card-title">จำนวนผู้ป่วย (คน/ครั้ง) (Bar Chart)</h3>
-                </div>
-                <div class="card-body">
-                    <canvas id="patientCountBarChart"></canvas>
-                </div>
-            </div>
-        </section>
     </div>
 
     <!-- Table 1: Revenue by Type -->
@@ -180,8 +169,10 @@
                                 <td>ผู้มีปัญหาสถานะ และสิทธิ</td>
                                 
                             </tr>
-                            <tr class="total-row">
-                                <td>รวมทั้งหมด</td>
+                            <tr class="table-info font-weight-bold">
+        <td style="color: #17a2b8; font-weight: bold;"> 
+                            <strong style="color: #17a2b8;">รวมทั้งหมด</strong>
+                    </td>
                                 
                             </tr>
                         </tbody>
@@ -553,120 +544,4 @@
 </div>
 
 
-<script>
-    // Chart Data
-    const chartLabels = ["ชำระเงินเองไม่ใช้ พรบ.", "ปกส.นอกจังหวัด", "ปกส.ในจังหวัด", "สิทธิ Walk in", "สิทธิ อปท.", "สิทธิจ่ายตรง"];
-    const incomeData = [210, 130, 100, 210, 585, 3365];
-    const hnCountData = [1, 1, 1, 2, 3, 6];
-    const vnCountData = [3, 1, 1, 3, 3, 9];
 
-    // Register Plugin
-    if (typeof ChartDataLabels !== 'undefined') {
-        Chart.register(ChartDataLabels);
-    }
-
-    // Generate Colors
-    function generateColors(count) {
-        const colors = ['#007bff', '#28a745', '#ffc107', '#dc3545', '#17a2b8', '#6f42c1', '#fd7e14', '#e83e8c', '#20c997', '#6c757d', '#001f3f', '#3d9970', '#ff851b', '#00c0ef', '#f012be'];
-        return Array.from({ length: count }, (_, i) => colors[i % colors.length]);
-    }
-    const backgroundColors = generateColors(chartLabels.length);
-
-    // Pie Chart
-    const ctxIncomePie = document.getElementById('incomePieChart').getContext('2d');
-    new Chart(ctxIncomePie, {
-        type: 'pie',
-        data: {
-            labels: chartLabels,
-            datasets: [{
-                data: incomeData,
-                backgroundColor: backgroundColors,
-                borderColor: '#fff',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'right',
-                    labels: { boxWidth: 15, padding: 10 }
-                },
-                datalabels: {
-                    formatter: (value, ctx) => {
-                        let sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                        return (value / sum * 100).toFixed(1) + "%";
-                    },
-                    color: '#fff',
-                    font: { weight: 'bold' }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.label || '';
-                            if (label) label += ': ';
-                            label += new Intl.NumberFormat('th-TH', { style: 'currency', currency: 'THB' }).format(context.raw);
-                            return label;
-                        }
-                    }
-                }
-            }
-        }
-    });
-
-    // Bar Chart
-    const ctxPatientBar = document.getElementById('patientCountBarChart').getContext('2d');
-    new Chart(ctxPatientBar, {
-        type: 'bar',
-        data: {
-            labels: chartLabels,
-            datasets: [{
-                label: 'จำนวนคน (HN)',
-                data: hnCountData,
-                backgroundColor: 'rgba(40, 167, 69, 0.8)',
-                borderColor: '#28a745',
-                borderWidth: 1,
-                yAxisID: 'y'
-            }, {
-                label: 'จำนวนครั้ง (VN)',
-                data: vnCountData,
-                backgroundColor: 'rgba(0, 123, 255, 0.8)',
-                borderColor: '#007bff',
-                borderWidth: 1,
-                yAxisID: 'y'
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            indexAxis: 'y',
-            scales: {
-                x: { beginAtZero: true, title: { display: true, text: 'จำนวน' } },
-                y: { stacked: false }
-            },
-            plugins: {
-                legend: { position: 'bottom' },
-                datalabels: {
-                    anchor: 'end',
-                    align: 'end',
-                    color: '#333',
-                    font: { size: 10, weight: 'bold' },
-                    formatter: (value) => value.toLocaleString()
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            let label = context.dataset.label || '';
-                            if (label) label += ': ';
-                            label += new Intl.NumberFormat('th-TH').format(context.raw);
-                            return label;
-                        }
-                    }
-                }
-            }
-        }
-    });
-</script>
-
-<?php include 'includes/footer.php'; ?>
